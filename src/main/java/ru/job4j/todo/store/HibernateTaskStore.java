@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
 
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Repository
 @AllArgsConstructor
@@ -19,28 +19,36 @@ public class HibernateTaskStore implements TaskStore {
         session.close();
     }
 
-    private boolean crud(Consumer<Session> consumer) {
+    private boolean calculation(Function<Session, Integer> function) {
+        boolean rsl = false;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            consumer.accept(session);
+            Integer count = function.apply(session);
             closeSession(session);
-            return true;
+            rsl = count > 0;
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
-        return false;
+        return rsl;
     }
 
     @Override
     public Task save(Task task) {
-        crud(session -> session.save(task));
+        Session session = sf.openSession();
+        try {
+            session.beginTransaction();
+            session.save(task);
+            closeSession(session);
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
         return task;
     }
 
     @Override
     public boolean deleteById(int id) {
-        return crud(session -> session.createQuery(
+        return calculation(session -> session.createQuery(
                         "DELETE Task WHERE id = :fId")
                 .setParameter("fId", id)
                 .executeUpdate());
@@ -48,7 +56,19 @@ public class HibernateTaskStore implements TaskStore {
 
     @Override
     public boolean update(Task task) {
-        return crud(session -> session.update(task));
+        return calculation(session -> session.createQuery(
+                        "UPDATE Task SET "
+                                + "title = :fTitle, "
+                                + "description = :fDescription, "
+                                + "created = :fCreated, "
+                                + "done = :fDone "
+                                + "WHERE id = :fId")
+                .setParameter("fTitle", task.getTitle())
+                .setParameter("fDescription", task.getDescription())
+                .setParameter("fCreated", task.getCreated())
+                .setParameter("fDone", task.isDone())
+                .setParameter("fId", task.getId())
+                .executeUpdate());
     }
 
     @Override
