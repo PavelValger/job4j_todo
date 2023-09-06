@@ -29,7 +29,7 @@ public class Task {
             return false;
         }
         Task task = (Task) o;
-        return id == task.id && done == task.done && Objects.equals(title, task.title);
+        return Objects.equals(id, task.id) && done == task.done && Objects.equals(title, task.title);
     }
 
     @Override
