@@ -50,6 +50,6 @@ public class SimpleTaskService implements TaskService {
                     task.isDone());
             taskStorage.putIfAbsent(task.getId(), taskPreview);
         }
-        return new ConcurrentLinkedQueue<>(taskStorage.values());
+        return taskStorage.values();
     }
 }
