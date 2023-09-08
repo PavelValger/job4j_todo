@@ -16,6 +16,11 @@
 <div class="container-fluid p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
+        <nav class="nav nav-pills nav-justified">
+            <a class="nav-link" th:href="@{/tasks}">Все задания</a>
+            <a class="nav-link" th:href="@{/tasks/completed}">Выполненные задания</a>
+            <a class="nav-link" th:href="@{/tasks/fresh}">Новые задания</a>
+        </nav>
         <div class="row">
             <table class="table">
                 <thead>
@@ -42,6 +47,15 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4"><a class="btn btn-secondary w-100" th:href="@{/tasks/create}">Добавить
+                        задание</a></div>
+                </div>
+            </div>
         </div>
     </div>
     <footer th:insert="blocks/footer :: footer"></footer>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!--  Зависимости Bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-icons-1.10.5/bootstrap-icons.css}" rel="stylesheet">
+    <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <title>Создание задания</title>
+</head>
+<body>
+<div class="container-fluid p-0">
+    <header th:insert="blocks/header :: header"></header>
+    <div class="container">
+        <form class="mt-3" th:action="@{/tasks/create}" method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label"><b>Имя</b></label>
+                <input type="text" class="form-control" id="title" name="title"
+                       placeholder="Название задачи, например, написать модульные тесты для слоя персистенции">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label"><b>Описание</b></label>
+                <textarea class="form-control" id="description" rows="15" name="description"
+                          placeholder="Опишите подробно требования в задании"></textarea>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" name="done" class="form-check-input" id="done">
+                <label class="form-check-label" for="done">Указать задание как выполненное</label>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-6"></div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/tasks}">Отмена</a></div>
+                        <div class="col-6">
+                            <button class="btn btn-primary w-100" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer th:insert="blocks/footer :: footer"></footer>
+</div>
+</body>
+</html>

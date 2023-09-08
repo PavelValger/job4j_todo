@@ -10,7 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,12 @@ public class SimpleTaskService implements TaskService {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private final TaskStore taskStore;
     private final ConcurrentHashMap<Integer, TaskPreview> taskStorage = new ConcurrentHashMap<>();
+
+    private Collection<TaskPreview> findAllStatus(Predicate<TaskPreview> predicate) {
+        return taskStorage.values().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public Task save(Task task) {
@@ -51,5 +58,15 @@ public class SimpleTaskService implements TaskService {
             taskStorage.putIfAbsent(task.getId(), taskPreview);
         }
         return taskStorage.values();
+    }
+
+    @Override
+    public Collection<TaskPreview> findAllTrue() {
+        return findAllStatus(TaskPreview::done);
+    }
+
+    @Override
+    public Collection<TaskPreview> findAllFalse() {
+        return findAllStatus(taskPreview -> !taskPreview.done());
     }
 }
