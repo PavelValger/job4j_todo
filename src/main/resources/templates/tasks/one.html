@@ -10,27 +10,15 @@
     <script th:src="@{/js/code.jquery.com_jquery-3.7.0.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
 
-    <title>Список всех заданий</title>
+    <title>Подробное описание задания</title>
 </head>
 <body>
 <div class="container-fluid p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
-        <nav class="nav nav-pills nav-justified">
-            <a class="nav-link" th:href="@{/tasks}">Все задания</a>
-            <a class="nav-link" th:href="@{/tasks/completed}">Выполненные задания</a>
-            <a class="nav-link" th:href="@{/tasks/fresh}">Новые задания</a>
-        </nav>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Статус задания</th>
-                <th scope="col">Имя</th>
-                <th scope="col">Дата создания</th>
-            </tr>
-            </thead>
+        <table class="table table-borderless">
             <tbody>
-            <tr th:each="task: ${tasks}">
+            <tr>
                 <td style="width: 70px; text-align: center;">
               <span th:if="${task.done}">
                 <i class="bi bi-check-square"></i>
@@ -39,10 +27,8 @@
                   <i class="bi bi-square"></i>
               </span>
                 </td>
-                <td>
-                    <a th:text="${task.title}" th:href="@{/tasks/{id}(id=${task.id})}"></a>
-                </td>
-                <td th:text="${task.created}"></td>
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
             </tr>
             </tbody>
         </table>
@@ -50,8 +36,13 @@
             <div class="col-6"></div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col-4"><a class="btn btn-secondary w-100" th:href="@{/tasks/create}">Добавить
-                        задание</a></div>
+                    <div class="col-4" th:if="${!task.done}"><a class="btn btn-outline-success w-100"
+                                                                th:href="@{/tasks/updateDone/{id}(id=${task.id})}">Выполнено</a>
+                    </div>
+                    <div class="col-4"><a class="btn btn-outline-info w-100"
+                                          th:href="@{/tasks/duplicate/{id}(id=${task.id})}">Редактировать</a></div>
+                    <div class="col-4"><a class="btn btn-outline-danger w-100"
+                                          th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a></div>
                 </div>
             </div>
         </div>

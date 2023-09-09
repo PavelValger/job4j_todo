@@ -72,6 +72,16 @@ public class HibernateTaskStore implements TaskStore {
     }
 
     @Override
+    public boolean updateDone(int id) {
+        return calculation(session -> session.createQuery(
+                        "UPDATE Task SET "
+                                + "done = true "
+                                + "WHERE id = :fId")
+                .setParameter("fId", id)
+                .executeUpdate());
+    }
+
+    @Override
     public Optional<Task> findById(int id) {
         Session session = sf.openSession();
         Optional<Task> result = Optional.empty();
@@ -91,7 +101,7 @@ public class HibernateTaskStore implements TaskStore {
         List<Task> result = Collections.emptyList();
         try {
             session.beginTransaction();
-            result = session.createQuery("from Task", Task.class).list();
+            result = session.createQuery("from Task t order by t.id", Task.class).list();
             closeSession(session);
         } catch (Exception e) {
             session.getTransaction().rollback();

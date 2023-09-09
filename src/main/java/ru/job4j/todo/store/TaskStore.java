@@ -13,6 +13,8 @@ public interface TaskStore {
 
     boolean update(Task task);
 
+    boolean updateDone(int id);
+
     Optional<Task> findById(int id);
 
     Collection<Task> findAll();

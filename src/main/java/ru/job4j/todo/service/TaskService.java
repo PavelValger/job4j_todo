@@ -14,6 +14,8 @@ public interface TaskService {
 
     boolean update(Task task);
 
+    boolean updateDone(int id);
+
     Optional<Task> findById(int id);
 
     Collection<TaskPreview> findAll();
