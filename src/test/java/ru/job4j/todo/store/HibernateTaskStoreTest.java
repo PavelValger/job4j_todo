@@ -24,7 +24,7 @@ class HibernateTaskStoreTest {
     @BeforeAll
     public static void initRepositories() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure().build();
+                .configure("hibernate_test.cfg.xml").build();
         sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         hibernateTaskStore = new HibernateTaskStore(sf);
     }
