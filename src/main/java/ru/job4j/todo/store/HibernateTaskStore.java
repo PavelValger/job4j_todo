@@ -56,19 +56,17 @@ public class HibernateTaskStore implements TaskStore {
 
     @Override
     public boolean update(Task task) {
-        return calculation(session -> session.createQuery(
-                        "UPDATE Task SET "
-                                + "title = :fTitle, "
-                                + "description = :fDescription, "
-                                + "created = :fCreated, "
-                                + "done = :fDone "
-                                + "WHERE id = :fId")
-                .setParameter("fTitle", task.getTitle())
-                .setParameter("fDescription", task.getDescription())
-                .setParameter("fCreated", task.getCreated())
-                .setParameter("fDone", task.isDone())
-                .setParameter("fId", task.getId())
-                .executeUpdate());
+        Session session = sf.openSession();
+        boolean rsl = false;
+        try {
+            session.beginTransaction();
+            session.update(task);
+            closeSession(session);
+            rsl = true;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
+        return rsl;
     }
 
     @Override
@@ -102,6 +100,22 @@ public class HibernateTaskStore implements TaskStore {
         try {
             session.beginTransaction();
             result = session.createQuery("from Task t order by t.id", Task.class).list();
+            closeSession(session);
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
+        return new ArrayList<>(result);
+    }
+
+    @Override
+    public Collection<Task> searchByCriterion(boolean flag) {
+        Session session = sf.openSession();
+        List<Task> result = Collections.emptyList();
+        try {
+            session.beginTransaction();
+            result = session.createQuery("from Task t where done = :fDone order by t.id", Task.class)
+                    .setParameter("fDone", flag)
+                    .list();
             closeSession(session);
         } catch (Exception e) {
             session.getTransaction().rollback();

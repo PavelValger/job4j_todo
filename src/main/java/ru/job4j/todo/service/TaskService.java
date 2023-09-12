@@ -1,6 +1,5 @@
 package ru.job4j.todo.service;
 
-import ru.job4j.todo.dto.TaskPreview;
 import ru.job4j.todo.model.Task;
 
 import java.util.Collection;
@@ -18,9 +17,9 @@ public interface TaskService {
 
     Optional<Task> findById(int id);
 
-    Collection<TaskPreview> findAll();
+    Collection<Task> findAll();
 
-    Collection<TaskPreview> findAllTrue();
+    Collection<Task> findAllTrue();
 
-    Collection<TaskPreview> findAllFalse();
+    Collection<Task> findAllFalse();
 }
