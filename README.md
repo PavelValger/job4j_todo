@@ -76,6 +76,26 @@
 
 ![](https://raw.githubusercontent.com/PavelValger/job4j_todo/e0d3478dc097e91aa67d63b0845a4f0c745068e6/img/9.jpg)
 
+- [x] Страница регистрации пользователя
+
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/страница%20регистрации.jpg)
+
+- [x] Страница входа на сайт
+
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/страница%20входа.jpg)
+
+- [x] Страница выполненного входа
+
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/вход%20выполнен.jpg)
+
+- [x] Страница ошибки регистрации
+
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/ошибка%20регистрации.jpg)
+
+- [x] Страница ошибки логина
+
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/ошибка%20логина.jpg)
+
 
 #### Контакты для связи :iphone::
 * Вальгер Павел Иванович;
