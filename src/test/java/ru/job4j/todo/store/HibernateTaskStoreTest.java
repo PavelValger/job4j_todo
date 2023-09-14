@@ -26,7 +26,7 @@ class HibernateTaskStoreTest {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure("hibernate_test.cfg.xml").build();
         sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        hibernateTaskStore = new HibernateTaskStore(sf);
+        hibernateTaskStore = new HibernateTaskStore(new CrudRepository(sf));
     }
 
     @AfterEach
@@ -71,7 +71,7 @@ class HibernateTaskStoreTest {
 
     @Test
     public void whenDeleteByIdThenFalse() {
-        assertThat(hibernateTaskStore.deleteById(0)).isFalse();
+        assertThat(hibernateTaskStore.deleteById(-1)).isFalse();
     }
 
     @Test
@@ -90,30 +90,9 @@ class HibernateTaskStoreTest {
         updatedTask.setCreated(creationDate.plusDays(1));
         var saved = hibernateTaskStore.save(task);
         updatedTask.setId(saved.getId());
-        var isUpdated = hibernateTaskStore.update(updatedTask);
+        hibernateTaskStore.update(updatedTask);
         var savedTask = hibernateTaskStore.findById(saved.getId());
-        assertThat(isUpdated).isTrue();
         assertThat(savedTask.get()).usingRecursiveComparison().isEqualTo(updatedTask);
-    }
-
-    @Test
-    public void whenUpdatedThenFalse() {
-        var creationDate = now().truncatedTo(ChronoUnit.MINUTES);
-        Task task = new Task();
-        task.setTitle("test");
-        task.setDone(true);
-        task.setDescription("");
-        task.setCreated(creationDate);
-
-        Task updatedTask = new Task();
-        updatedTask.setTitle("testUp");
-        updatedTask.setDone(false);
-        updatedTask.setDescription("qwerty");
-        updatedTask.setCreated(creationDate.plusDays(1));
-        var saved = hibernateTaskStore.save(task);
-        updatedTask.setId(saved.getId());
-        hibernateTaskStore.deleteById(saved.getId());
-        assertThat(hibernateTaskStore.update(updatedTask)).isFalse();
     }
 
     @Test

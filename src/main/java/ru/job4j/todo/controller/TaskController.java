@@ -85,12 +85,8 @@ public class TaskController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Task task, Model model) {
-        var isUpdated = taskService.update(task);
-        if (!isUpdated) {
-            model.addAttribute("message", "Задание с указанным идентификатором не найдено");
-            return "errors/404";
-        }
+    public String update(@ModelAttribute Task task) {
+        taskService.update(task);
         return "redirect:/tasks";
     }
 }
