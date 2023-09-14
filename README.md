@@ -84,15 +84,15 @@
 
 ![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/страница%20входа.jpg)
 
-- [x] Страница выполненного входа
+- [x] Вход выполнен
 
 ![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/вход%20выполнен.jpg)
 
-- [x] Страница ошибки регистрации
+- [x] Ошибка регистрации
 
-![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/ошибка%20регистрации.jpg)
+![](https://raw.githubusercontent.com/PavelValger/job4j_todo/2644be77e2d133d806990cac0adcff7cfbb8b62b/img/ошибка%20регистрации.jpg)
 
-- [x] Страница ошибки логина
+- [x] Ошибка логина
 
 ![](https://raw.githubusercontent.com/PavelValger/job4j_todo/1ebefe2053ab1e37c16364c667919f2ade488ade/img/ошибка%20логина.jpg)
 
