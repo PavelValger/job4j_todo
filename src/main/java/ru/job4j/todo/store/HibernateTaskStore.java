@@ -42,14 +42,10 @@ public class HibernateTaskStore implements TaskStore {
 
     @Override
     public Optional<Task> findById(int id) {
-        try {
-            return crudRepository.optional(
-                    "from Task where id = :fId", Task.class,
-                    Map.of("fId", id)
-            );
-        } catch (Exception exception) {
-            return Optional.empty();
-        }
+        return crudRepository.optional(
+                "from Task where id = :fId", Task.class,
+                Map.of("fId", id)
+        );
     }
 
     @Override

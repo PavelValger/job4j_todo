@@ -85,11 +85,12 @@ public class CrudRepository {
             session.beginTransaction();
             T rsl = command.apply(session);
             session.getTransaction().commit();
-            session.close();
             return rsl;
         } catch (Exception e) {
             session.getTransaction().rollback();
             throw e;
+        } finally {
+            session.close();
         }
     }
 }

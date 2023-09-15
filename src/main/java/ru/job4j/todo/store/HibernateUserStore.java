@@ -27,14 +27,10 @@ public class HibernateUserStore implements UserStore {
 
     @Override
     public Optional<User> findByLoginAndPassword(String login, String password) {
-        try {
-            return crudRepository.optional(
-                    "from User where login = :fLogin and password = :fPassword", User.class,
-                    Map.of("fLogin", login,
-                            "fPassword", password)
-            );
-        } catch (Exception exception) {
-            return Optional.empty();
-        }
+        return crudRepository.optional(
+                "from User where login = :fLogin and password = :fPassword", User.class,
+                Map.of("fLogin", login,
+                        "fPassword", password)
+        );
     }
 }
