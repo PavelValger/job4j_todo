@@ -70,8 +70,8 @@ public class TaskController {
     }
 
     @GetMapping("/updateDone/{id}")
-    public String updateDone(Model model, @PathVariable int id) {
-        var isUpdated = taskService.updateDone(id);
+    public String updateDone(Model model, @PathVariable int id, HttpSession session) {
+        var isUpdated = taskService.updateDone(id, (User) session.getAttribute("user"));
         if (!isUpdated) {
             model.addAttribute("message", "Задание не найдено");
             return "errors/404";
@@ -90,7 +90,9 @@ public class TaskController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Task task) {
+    public String update(@ModelAttribute Task task, HttpSession session) {
+        var user = (User) session.getAttribute("user");
+        task.setUser(user);
         taskService.update(task);
         return "redirect:/tasks";
     }

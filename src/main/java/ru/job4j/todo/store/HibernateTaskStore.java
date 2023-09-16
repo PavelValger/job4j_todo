@@ -3,6 +3,7 @@ package ru.job4j.todo.store;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 
 import java.util.*;
 
@@ -31,12 +32,13 @@ public class HibernateTaskStore implements TaskStore {
     }
 
     @Override
-    public boolean updateDone(int id) {
+    public boolean updateDone(int id, User user) {
         return crudRepository.numberRowsRequest(
                 "UPDATE Task SET "
-                        + "done = true "
+                        + "done = true, "
+                        + "user = :fUser "
                         + "WHERE id = :fId",
-                Map.of("fId", id)
+                Map.of("fId", id, "fUser", user)
         ) > 0;
     }
 
