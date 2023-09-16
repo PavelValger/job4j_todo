@@ -21,8 +21,8 @@ public class HibernateUserStore implements UserStore {
             return Optional.of(user);
         } catch (Exception e) {
             LOG.info("Регистрация зарегистрированного пользователя, Exception in log example", e);
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     @Override
