@@ -3,7 +3,6 @@ package ru.job4j.todo.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
-import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.TaskStore;
 
 import java.util.Collection;
@@ -30,8 +29,8 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean updateDone(int id, User user) {
-        return taskStore.updateDone(id, user);
+    public boolean updateDone(int id) {
+        return taskStore.updateDone(id);
     }
 
     @Override

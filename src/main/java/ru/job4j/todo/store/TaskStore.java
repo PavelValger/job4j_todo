@@ -1,7 +1,6 @@
 package ru.job4j.todo.store;
 
 import ru.job4j.todo.model.Task;
-import ru.job4j.todo.model.User;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -14,7 +13,7 @@ public interface TaskStore {
 
     void update(Task task);
 
-    boolean updateDone(int id, User user);
+    boolean updateDone(int id);
 
     Optional<Task> findById(int id);
 
