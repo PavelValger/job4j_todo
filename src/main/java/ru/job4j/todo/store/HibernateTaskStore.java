@@ -51,13 +51,13 @@ public class HibernateTaskStore implements TaskStore {
     @Override
     public Collection<Task> findAll() {
         return crudRepository.query(
-                "from Task t order by t.id", Task.class);
+                "from Task t JOIN FETCH t.priority order by t.id", Task.class);
     }
 
     @Override
     public Collection<Task> searchByCriterion(boolean flag) {
         return crudRepository.query(
-                "from Task t where done = :fDone order by t.id", Task.class,
+                "from Task t JOIN FETCH t.priority where done = :fDone order by t.id", Task.class,
                 Map.of("fDone", flag)
         );
     }

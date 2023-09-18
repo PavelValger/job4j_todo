@@ -24,7 +24,8 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Статус задания</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Приоритет</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Пользователь</th>
                 <th scope="col">Дата создания</th>
@@ -40,6 +41,8 @@
                   <i class="bi bi-square"></i>
               </span>
                 </td>
+                <td style="width: 100px; text-align: center;"
+                    th:text="${task.priority.name}"></td>
                 <td>
                     <a th:text="${task.title}" th:href="@{/tasks/{id}(id=${task.id})}"></a>
                 </td>
