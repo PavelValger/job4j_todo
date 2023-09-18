@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 
@@ -144,9 +145,12 @@ class HibernateTaskStoreTest {
 
     @Test
     public void whenFindAllThenGetSame() {
+        Priority priority = new Priority();
+        priority.setId(1);
         var creationDate = now().truncatedTo(ChronoUnit.MINUTES);
         Task task1 = new Task();
         task1.setTitle("test");
+        task1.setPriority(priority);
         task1.setUser(user);
         task1.setDone(true);
         task1.setDescription("");
@@ -156,6 +160,7 @@ class HibernateTaskStoreTest {
         Task task2 = new Task();
         task2.setTitle("testUp");
         task2.setUser(user);
+        task2.setPriority(priority);
         task2.setDone(false);
         task2.setDescription("qw");
         task2.setCreated(creationDate.plusDays(1));
