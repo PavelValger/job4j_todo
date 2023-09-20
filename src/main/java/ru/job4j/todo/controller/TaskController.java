@@ -6,15 +6,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
+import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
+    private final CategoryService categoryService;
+    private final PriorityService priorityService;
 
     @GetMapping
     public String getAll(Model model) {
@@ -23,14 +28,18 @@ public class TaskController {
     }
 
     @GetMapping("/create")
-    public String getCreationPage() {
+    public String getCreationPage(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("priorities", priorityService.findAll());
         return "tasks/create";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Task task, HttpSession session) {
+    public String create(@ModelAttribute Task task, HttpSession session,
+                         @RequestParam List<Integer> categoriesId) {
         var user = (User) session.getAttribute("user");
         task.setUser(user);
+        task.getCategories().addAll(categoryService.findAllById(categoriesId));
         taskService.save(task);
         return "redirect:/tasks";
     }
@@ -66,6 +75,7 @@ public class TaskController {
             return "errors/404";
         }
         model.addAttribute("task", taskOptional.get());
+        model.addAttribute("categoriesList", categoryService.findAll());
         return "tasks/update";
     }
 
@@ -90,7 +100,8 @@ public class TaskController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Task task) {
+    public String update(@ModelAttribute Task task, @RequestParam List<Integer> categoriesId) {
+        task.getCategories().addAll(categoryService.findAllById(categoriesId));
         taskService.update(task);
         return "redirect:/tasks";
     }

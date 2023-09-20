@@ -5,11 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -64,6 +63,13 @@ public class CrudRepository {
         Function<Session, List<T>> command = session -> session
                 .createQuery(query, cl)
                 .list();
+        return tx(command);
+    }
+
+    public <T> Collection<T> findAllById(Collection<Integer> integers, Class<T> cl) {
+        Function<Session, Collection<T>> command = session -> integers.stream()
+                .map(integer -> session.get(cl, integer))
+                .collect(Collectors.toList());
         return tx(command);
     }
 

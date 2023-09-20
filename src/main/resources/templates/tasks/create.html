@@ -24,20 +24,40 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label"><b>Описание</b></label>
-                <textarea class="form-control" id="description" rows="15" name="description"
+                <textarea class="form-control" id="description" rows="7" name="description"
                           placeholder="Опишите подробно требования в задании"></textarea>
             </div>
             <div class="form-check mb-3">
                 <input type="checkbox" name="done" class="form-check-input" id="done">
                 <label class="form-check-label" for="done">Указать задание как выполненное</label>
             </div>
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="form-group" style="max-width: 250px;">
+                        <label for="priority"><b>Приоритет</b></label>
+                        <select class="form-control" id="priority" name="priority.id" required>
+                            <option th:each="priority : ${priorities}"
+                                    th:value="${priority.id}" th:text="${priority.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-group" style="max-width: 250px;">
+                        <label for="category"><b>Категория</b></label>
+                        <select class="custom-select" size="3" id="category" name="categoriesId" multiple required>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3 row">
                 <div class="col-6"></div>
                 <div class="col-6">
                     <div class="row">
-                        <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/tasks}">Отмена</a></div>
+                        <div class="col-6"><a class="btn btn-outline-info w-100" th:href="@{/tasks}">Отмена</a></div>
                         <div class="col-6">
-                            <button class="btn btn-primary w-100" type="submit">Сохранить</button>
+                            <button class="btn btn-outline-success w-100" type="submit">Сохранить</button>
                         </div>
                     </div>
                 </div>
