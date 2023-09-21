@@ -19,6 +19,6 @@ public class HibernateCategoryStore implements CategoryStore {
 
     @Override
     public Collection<Category> findAllById(Collection<Integer> categoriesId) {
-       return crudRepository.findAllById(categoriesId, Category.class);
+       return crudRepository.findAllById("from Category", categoriesId, Category.class);
     }
 }

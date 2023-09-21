@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -66,11 +65,14 @@ public class CrudRepository {
         return tx(command);
     }
 
-    public <T> Collection<T> findAllById(Collection<Integer> integers, Class<T> cl) {
-        Function<Session, Collection<T>> command = session -> integers.stream()
-                .map(integer -> session.get(cl, integer))
-                .collect(Collectors.toList());
-        return tx(command);
+    public <T> Collection<T> findAllById(String query, Collection<Integer> integers, Class<T> cl) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(query).append(" where id in (");
+        for (Integer i : integers) {
+            stringBuffer.append(i).append(", ");
+        }
+        stringBuffer.replace(stringBuffer.length() - 2, stringBuffer.length() - 1, ")");
+        return query(stringBuffer.toString(), cl);
     }
 
     public <T> List<T> query(String query, Class<T> cl, Map<String, Object> args) {
