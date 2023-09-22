@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Category;
 
 import java.util.Collection;
+import java.util.Map;
 
 @Repository
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class HibernateCategoryStore implements CategoryStore {
 
     @Override
     public Collection<Category> findAllById(Collection<Integer> categoriesId) {
-       return crudRepository.findAllById("from Category", categoriesId, Category.class);
+        return crudRepository.query("from Category where id in :fCategoriesId", Category.class,
+                Map.of("fCategoriesId", categoriesId));
     }
 }

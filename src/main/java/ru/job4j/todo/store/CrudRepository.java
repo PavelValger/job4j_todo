@@ -65,16 +65,6 @@ public class CrudRepository {
         return tx(command);
     }
 
-    public <T> Collection<T> findAllById(String query, Collection<Integer> integers, Class<T> cl) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(query).append(" where id in (");
-        for (Integer i : integers) {
-            stringBuffer.append(i).append(", ");
-        }
-        stringBuffer.replace(stringBuffer.length() - 2, stringBuffer.length() - 1, ")");
-        return query(stringBuffer.toString(), cl);
-    }
-
     public <T> List<T> query(String query, Class<T> cl, Map<String, Object> args) {
         Function<Session, List<T>> command = session -> {
             var sq = session
