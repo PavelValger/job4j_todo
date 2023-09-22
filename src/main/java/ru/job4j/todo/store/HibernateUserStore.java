@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.User;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,5 +32,10 @@ public class HibernateUserStore implements UserStore {
                 Map.of("fLogin", login,
                         "fPassword", password)
         );
+    }
+
+    @Override
+    public Collection<TimeZone> getAllTimeZones() {
+        return Arrays.stream(TimeZone.getAvailableIDs()).map(TimeZone::getTimeZone).collect(Collectors.toList());
     }
 }

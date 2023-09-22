@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.UserStore;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 @RequiredArgsConstructor
@@ -20,5 +22,10 @@ public class SimpleUserService implements UserService {
     @Override
     public Optional<User> findByLoginAndPassword(String login, String password) {
         return userStore.findByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public Collection<TimeZone> getAllTimeZones() {
+        return userStore.getAllTimeZones();
     }
 }
