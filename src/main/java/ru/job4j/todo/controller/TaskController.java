@@ -11,9 +11,9 @@ import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 
 import javax.servlet.http.HttpSession;
-import java.time.ZoneId;
-import java.util.Collection;
 import java.util.List;
+
+import static ru.job4j.todo.utility.TimeZoneUtility.timeZoneWrapper;
 
 @Controller
 @AllArgsConstructor
@@ -22,17 +22,6 @@ public class TaskController {
     private final TaskService taskService;
     private final CategoryService categoryService;
     private final PriorityService priorityService;
-
-    private Collection<Task> timeZoneWrapper(User user, Collection<Task> tasks) {
-        if (!user.getTimezone().startsWith("Укаж") && !tasks.isEmpty()) {
-            for (Task task : tasks) {
-                task.setCreated(task.getCreated()
-                        .atZone(ZoneId.of("UTC"))
-                        .withZoneSameInstant(ZoneId.of(user.getTimezone())).toLocalDateTime());
-            }
-        }
-        return tasks;
-    }
 
     @GetMapping
     public String getAll(Model model, HttpSession session) {
