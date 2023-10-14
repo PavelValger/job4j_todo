@@ -58,7 +58,7 @@
 
 - [x] Страница со списком создания задания
 
-![](https://raw.githubusercontent.com/PavelValger/job4j_todo/e0d3478dc097e91aa67d63b0845a4f0c745068e6/img/5.jpg)
+![](https://github.com/PavelValger/job4j_todo/blob/master/img/5.jpg?raw=true)
 
 - [x] Страница с подробным описанием нового задания
 
@@ -70,7 +70,7 @@
 
 - [x] Страница редактирования задания
 
-![](https://raw.githubusercontent.com/PavelValger/job4j_todo/e0d3478dc097e91aa67d63b0845a4f0c745068e6/img/8.jpg)
+![](https://github.com/PavelValger/job4j_todo/blob/master/img/8.jpg?raw=true)
 
 - [x] Страница ошибки 404
 
